@@ -21,7 +21,7 @@ DELTA_ANGELS=FOV/NUM_RAYS
 
 player_pos=(HALF_WEIGHT,HALF_HEIGHT)
 player_angle =0
-player_speed =1
+player_speed =0.5
 
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
