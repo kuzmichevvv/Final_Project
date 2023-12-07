@@ -48,7 +48,8 @@ def ray_casting(sc, player_pos, player_angle,player_proj_coeff):
 
         # projection
         depth = depth_v if depth_v < depth_h else depth_h
-        depth *= math.cos(player_angle - cur_angle) + 0.01
+        depth *= math.cos(player_angle - cur_angle) 
+        depth += 0.01
         proj_coeff = player_proj_coeff / depth
         proj_coeff1 = PROJ_COEFF/depth
         c=255/(1+depth**2*0.0001)
