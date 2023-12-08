@@ -29,7 +29,7 @@ class Player():
     def shift_func_pressed(self):
         if self.shift_shift:
             self.proj_coeff += self.shift_v
-            self.delta_speed = 0.4
+            self.delta_speed = 0.4 * 3
             self.shift_shift = False
 
         keys = pygame.key.get_pressed()

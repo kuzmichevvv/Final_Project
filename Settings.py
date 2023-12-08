@@ -9,7 +9,7 @@ FPS_POS=(WIDTH-65,5)
 TILE=100
 FOV=math.pi/3
 HALF_FOV=FOV/2
-NUM_RAYS=100
+NUM_RAYS=300
 GRAVITY=0.3
 MAX_DEPTH=800
 DIST = NUM_RAYS/(2*math.tan(HALF_FOV))
@@ -21,7 +21,7 @@ DELTA_ANGELS=FOV/NUM_RAYS
 
 player_pos=(HALF_WEIGHT,HALF_HEIGHT)
 player_angle =0
-player_speed =0.5
+player_speed =0.5 * 3
 
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
