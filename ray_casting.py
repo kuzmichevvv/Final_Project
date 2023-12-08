@@ -7,7 +7,6 @@ from Map import world_map
 def mapping(a, b):
     return (a // TILE) * TILE, (b // TILE) * TILE
 
-
 def ray_casting(sc, player_pos, player_angle,player_proj_coeff):
     ox, oy = player_pos
     xm, ym = mapping(ox, oy)
@@ -19,12 +18,13 @@ def ray_casting(sc, player_pos, player_angle,player_proj_coeff):
         cos_a = cos_a if cos_a else 0.000001
 
         # verticals
-        if(cos_a>0):
-            x=xm+TILE
+        if cos_a > 0:
+            x = xm+TILE
             dx=1
         else:
             x=xm
             dx=-1
+
         for i in range(0, WIDTH, TILE):
             depth_v = (x - ox) / cos_a
             y = oy + depth_v * sin_a
@@ -51,8 +51,8 @@ def ray_casting(sc, player_pos, player_angle,player_proj_coeff):
         depth *= math.cos(player_angle - cur_angle) 
         depth += 0.01
         proj_coeff = player_proj_coeff / depth
-        proj_coeff1 = PROJ_COEFF/depth
-        c=255/(1+depth**2*0.0001)
-        color=(c,c,c)
-        pygame.draw.rect(sc,color,(ray*SCALE, HALF_HEIGHT-proj_coeff/2,SCALE,proj_coeff1))
-        cur_angle+=DELTA_ANGELS
+        proj_coeff1 = PROJ_COEFF / depth
+        c = 255 / (1 + depth**2*0.0001)
+        color = (c, c, c)
+        pygame.draw.rect(sc, color, (ray*SCALE, HALF_HEIGHT-proj_coeff/2, SCALE, proj_coeff1))
+        cur_angle += DELTA_ANGELS
