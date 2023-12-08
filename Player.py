@@ -9,10 +9,12 @@ class Player():
         self.x, self.y = player_pos
         self.angle = player_angle
         self.proj_coeff = PROJ_COEFF
+        self.delta_speed = 0
         self.jump_v = -1000
         self.jump = False
-        self.shift_v = 3000
+        self.shift_v = 10000
         self.shift = False
+        self.shift_shift = True
         self.side = 20
         self.rect = pygame.Rect(*player_pos, self.side, self.side)
 
@@ -24,15 +26,19 @@ class Player():
             self.jump = False
             self.jump_v = -1000
 
-    def shift_func(self):
-        self.proj_coeff += self.shift_v
-        # self.shift_v -= 200
-        if self.proj_coeff <= PROJ_COEFF:
-            self.proj_coeff = PROJ_COEFF
+    def shift_func_pressed(self):
+        if self.shift_shift:
+            self.proj_coeff += self.shift_v
+            self.delta_speed = 0.4
+            self.shift_shift = False
+
+        keys = pygame.key.get_pressed()
+        if not keys[pygame.K_LSHIFT] and not keys[pygame.K_RSHIFT]:
             self.shift = False
-            self.shift_v = 2000
-        if(self.proj_coeff > PROJ_COEFF):
-            pass
+            self.proj_coeff -= self.shift_v
+            self.delta_speed = 0
+            self.shift_shift = True
+
     def pos(self):
         return self.x, self.y
 
@@ -73,23 +79,23 @@ class Player():
         keys = pygame.key.get_pressed()
 
         if keys[pygame.K_w]:
-            dx = player_speed * cos_a
-            dy = player_speed * sin_a
+            dx = (player_speed - self.delta_speed) * cos_a
+            dy = (player_speed - self.delta_speed) * sin_a
             self.detect_collision(dx, dy)
             self.movement()
         if keys[pygame.K_a]:
-            dx = player_speed * sin_a
-            dy = -player_speed * cos_a
+            dx = (player_speed - self.delta_speed) * sin_a
+            dy = -(player_speed - self.delta_speed) * cos_a
             self.detect_collision(dx, dy)
             self.movement()
         if keys[pygame.K_d]:
-            dx = -player_speed * sin_a
-            dy = player_speed * cos_a
+            dx = -(player_speed - self.delta_speed) * sin_a
+            dy = (player_speed - self.delta_speed) * cos_a
             self.detect_collision(dx, dy)
             self.movement()
         if keys[pygame.K_s]:
-            dx = -player_speed * cos_a
-            dy = -player_speed * sin_a
+            dx = -(player_speed - self.delta_speed) * cos_a
+            dy = -(player_speed - self.delta_speed) * sin_a
             self.detect_collision(dx, dy)
             self.movement()
         if keys[pygame.K_RIGHT]:

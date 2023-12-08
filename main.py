@@ -12,7 +12,7 @@ drawing=Drawing(sc)
 
 while True:
     for event in pygame.event.get():
-        if event.type== pygame.QUIT:
+        if event.type == pygame.QUIT:
             exit()
 
     sc.fill(BLACK)
@@ -20,7 +20,7 @@ while True:
     if player.jump:
         player.jump_func()
     if player.shift:
-        player.shift_func()
+        player.shift_func_pressed()
 
     player.move()
     drawing.background()
