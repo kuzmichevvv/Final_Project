@@ -9,6 +9,7 @@ sc = pygame.display.set_mode((WIDTH, HEIGHT))
 clock = pygame.time.Clock()
 player = Player.Player()
 drawing=Drawing(sc)
+all_sprites = pygame.sprite.Group()
 
 while True:
     for event in pygame.event.get():
@@ -26,6 +27,7 @@ while True:
     drawing.background()
 
     drawing.world(player.pos(),player.angle, player.proj_coeff)
+    all_sprites.draw(sc)
     drawing.fps(clock)
 
     pygame.display.flip()
