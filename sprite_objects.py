@@ -182,4 +182,3 @@ class SpriteObject:
                     self.flag_flag = False
             else:
                 self.flag_flag = True
-            print(self.x, self.y)
