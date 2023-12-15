@@ -1,77 +1,76 @@
-from pygame import *
-def settings():
-	size = (800, 600)
-	screen = display.set_mode(size)
-	running = True
-	while running:
-		for e in event.get():
-			if e.type == QUIT:
-				running = False
-	screen.fill((100, 100, 75))
-	menu.draw(screen, 100, 100, 75)
+import pygame
+import button
 
-	display.flip()
+pygame.init()
 
-init()
+SCREEN_WIDTH = 800
+SCREEN_HEIGHT = 600
 
-size = (800, 600)
+screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+pygame.display.set_caption("Main Menu")
 
-screen = display.set_mode(size)
+game_paused = False
+menu_state = "main"
 
-Arial = font.SysFont('arial', 50)
+font = pygame.font.SysFont("arialblack", 40)
 
-class Menu:
-	def __init__(self, _current_option_index):
-		self._option_surfaces = []
-		self._callbacks = []
-		self._current_option_index = 0
-	def number(self):
-		self.option = self._current_option_index
-	def append_option(self, option, callback):
-		self._option_surfaces.append(Arial.render(option, True, (255, 255, 255)))
-		self._callbacks.append(callback)
+TEXT_COL = (255, 255, 255)
 
-	def switch(self, direction):
-		self._current_option_index = max(0, min(self._current_option_index + direction, len(self._option_surfaces) - 1))
+resume_img = pygame.image.load("images/button_resume.png").convert_alpha()
+options_img = pygame.image.load("images/button_options.png").convert_alpha()
+quit_img = pygame.image.load("images/button_quit.png").convert_alpha()
+video_img = pygame.image.load('images/button_video.png').convert_alpha()
+audio_img = pygame.image.load('images/button_audio.png').convert_alpha()
+keys_img = pygame.image.load('images/button_keys.png').convert_alpha()
+back_img = pygame.image.load('images/button_back.png').convert_alpha()
 
-	def select(self):
-		self._callbacks[self._current_option_index]()
+resume_button = button.Button(304, 125, resume_img, 1)
+options_button = button.Button(297, 250, options_img, 1)
+quit_button = button.Button(336, 375, quit_img, 1)
+video_button = button.Button(226, 75, video_img, 1)
+audio_button = button.Button(225, 200, audio_img, 1)
+keys_button = button.Button(246, 325, keys_img, 1)
+back_button = button.Button(332, 450, back_img, 1)
 
-	def draw(self, surf, x, y, option_y_padding):
-		for i, option in enumerate(self._option_surfaces):
-			option_rect = option.get_rect()
-			option_rect.topleft = (x, y + i * option_y_padding)
-			if i == self._current_option_index:
-				draw.rect(surf, (0, 100, 0), option_rect)
-			surf.blit(option, option_rect)
+def draw_text(text, font, text_col, x, y):
+  img = font.render(text, True, text_col)
+  screen.blit(img, (x, y))
 
-class Transfer:
-	def __init__(self):
-		return
-	def select(self, position):
-		return		
-menu = Menu(0)
-menu.append_option('Play', lambda: print('play'))
-menu.append_option('New game', lambda: print('newgame'))
-menu.append_option('Settings', lambda: settings())
-menu.append_option('Quit', quit)
+run = True
+while run:
 
-running = True
+  screen.fill((52, 78, 91))
 
-while running:
-	for e in event.get():
-		if e.type == QUIT:
-			running = False
-		elif e.type == KEYDOWN:
-			if e.key == K_w:
-				menu.switch(-1)
-			elif e.key == K_s:
-				menu.switch(1)
-			elif e.key == K_SPACE:
-				menu.select()	
-			elif Menu.num == 2:
-				settings.append_option()
-				print('Hello world!')
+  if game_paused == False:
+    if menu_state == "main":
+      if resume_button.draw(screen):
+        game_paused = True
+      if options_button.draw(screen):
+        menu_state = "options"
+      if quit_button.draw(screen):
+        run = False
+    if menu_state == "options":
+      if video_button.draw(screen):
+        print("Video Settings")
+      if audio_button.draw(screen):
+        print("Audio Settings")
+      if keys_button.draw(screen):
+        print("Change Key Bindings")
+      if back_button.draw(screen):
+        menu_state = "main"
+  else:
+    draw_text("some game", font, TEXT_COL, 160, 250)
+
+  for event in pygame.event.get():
+    if event.type == pygame.KEYDOWN:
+      if event.key == pygame.K_SPACE:
+        game_paused = False
+    if event.type == pygame.QUIT:
+      run = False
+
+  pygame.display.update()
+
+pygame.quit()
 
 
 	screen.fill((0, 0, 0))
