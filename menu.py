@@ -1,5 +1,6 @@
 import pygame
 import button
+import os
 
 pygame.init()
 
@@ -44,7 +45,7 @@ while run:
   if game_paused == False:
     if menu_state == "main":
       if resume_button.draw(screen):
-        game_paused = True
+        os.system('python main.py')
       if options_button.draw(screen):
         menu_state = "options"
       if quit_button.draw(screen):
@@ -72,10 +73,5 @@ while run:
 
 pygame.quit()
 
-
-	screen.fill((0, 0, 0))
-	menu.draw(screen, 100, 100, 75)
-
-	display.flip()
 
 quit()
